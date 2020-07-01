@@ -13,8 +13,8 @@ This is an electronic project, so, the model will be simplified to some extent, 
 
 To build the chassis, the protection plates and the wheels i used some woodworking machines that i have access to. The dimensions have been estabilished by scaling some images knowing the total length and width of the model.
 
-In the structure i placed two pulleys to reduce the speed of the main motors, these wil transmit the power to the geared wheel, took from an old Meccano kit.
+In the structure i placed two pulleys to reduce the speed of the main motors, these will transmit the power to the geared wheel, took from an old Meccano kit.
 
 |**Main structure**|
 |:--:|
-|![Main_structure](https://github.com/dadit97/Razorback-Project/blob/master/Images/Main Structure.jpg)|
+|![Main_structure](https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg)|
