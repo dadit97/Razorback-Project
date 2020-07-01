@@ -11,9 +11,9 @@ This is an electronic project, so, the model will be simplified to some extent, 
 
 ## Body construction
 
-To build the chassis, the protection plates and the wheels i used some woodworking machines that i have access to. The dimensions have been estabilished by scaling some images knowing the total length and width of the model.
+To build the chassis, the protection plates and the wheels I used some woodworking machines that I have access to. The dimensions have been estabilished by scaling some images knowing the total length and width of the model.
 
-In the structure i placed two pulleys to reduce the speed of the main motors, these will transmit the power to the geared wheel, took from an old Meccano kit.
+In the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the center of the body.
 
 |**Main structure**|
 |:--:|
