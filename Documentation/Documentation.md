@@ -1,4 +1,9 @@
-## Introduction
+# Table of contents
+
+- [Introduction](#Introduction)
+- [Body construction](#Body)
+
+## Introduction <a name="Introduction"></a>
 
 The idea is to create a dynamic model of the Sci-Fi Armoured Personnel Carrier Razorback, from the WarHammer 40,000 game series.
 
@@ -9,7 +14,7 @@ The idea is to create a dynamic model of the Sci-Fi Armoured Personnel Carrier R
 The model, in addiction to being remotely controlled, should be able to follow a path he was instructed to patrol, using a compass as navigation aid and a distance sensor to avoid collisions.
 This is an electronic project, so, the model will be simplified to some extent, but the objective is to create something that looks pretty similar.
 
-## Body construction
+## Body construction <a name="Body"></a>
 
 To build the chassis, the protection plates and the wheels I used some woodworking machines that I have access to. The dimensions have been estabilished by scaling some images knowing the total length and width of the model.
 
