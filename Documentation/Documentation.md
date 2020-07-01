@@ -17,4 +17,4 @@ In the structure two pulleys were placed to reduce the speed of the main motors,
 
 |**Main structure**|
 |:--:|
-|![Main_structure](https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg)|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="550">|
