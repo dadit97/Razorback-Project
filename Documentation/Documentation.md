@@ -42,9 +42,9 @@ The remaining of the building work were just the various decorations to make it 
 
 To create the illusion of the engine rumble a MP3 module has been added to the control system, connected to a tiny 3W speaker, which is the maximum power that the module can supply without an amplifier.
 
-|**MP3 module and SPeaker**|
+|**MP3 module and Speaker**|
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="450">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" width="450">|
 
 The module will be instructed by the Arduino using a Serial communication, which will change the sound to be reproduced to suit the state of the model.
-The storage of the module is a microSD card, in which the looped sound were loaded.
+The storage of the module is a microSD card, in which the looped sounds were loaded.
