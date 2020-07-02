@@ -63,7 +63,7 @@ At the beginning of the project, the propulsion was based on two small 3-6V DC m
 
 
 After the replacing another problem arised, the motor driver.
-The driver chosen was the classic L298N, basically the standard for  Arduino-powered moving projects.
+The driver chosen was the classic L298N, basically the standard for<br> Arduino-powered moving projects.
 
 
 |**L298N**||
