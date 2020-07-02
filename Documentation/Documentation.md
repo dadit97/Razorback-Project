@@ -46,7 +46,7 @@ To create the illusion of the engine rumble a MP3 module has been added to the c
 
 |**MP3 module and Speaker**|
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" width="400">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" width="400" heigth="400">|
 
 The module will be instructed by the Arduino using a Serial communication, which will change the sound to be reproduced to suit the state of the model.
 The storage of the module is a microSD card, in which the looped sounds were loaded.
