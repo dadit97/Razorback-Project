@@ -55,11 +55,9 @@ The storage of the module is a microSD card, in which the looped sounds were loa
 
 At the beginning of the project, the propulsion was based on two small 3-6V DC motors, but during the construction, the model's weigth showed clearly that this solution was unacceptable.
 
-According to this, the two motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.
-
-|**Motors used**|
-|:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="400">|
+|**Motors used**||
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="400">|According to this, the two motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.
 
 After the replacing another problem arised, the motor driver.
 The driver chosen was the classic L298N, basically the standard for Arduino-powered moving projects.
