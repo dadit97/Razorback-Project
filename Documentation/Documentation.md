@@ -64,10 +64,6 @@ The driver chosen was the classic L298N, basically the standard for Arduino-powe
 |:--:|--|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/L298N.jpg" width="400">|This double motor driver, unfortunately, can provide just 2 Ampere for channel, which is enough for 3-6V motors, but too low for something bigger.According to a multimeter test, the motors can use up to 5.6 Ampere at stall load, so even using one driver per motor by bridging the outputs (a solution that create a lot of redundancy in the circuit), was not enough.|
 
-
-
-The driver chosen the replace the inadequate one was a 15 Ampere double motor driver, equipped with MOSFET bridges, wich allowed the motor to use the full power provided by the battery without the danger of overheating the chip.
-
-|**IRF3205 Double Motor Driver**|
-|:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Double_Motor_Driver.jpg" width="400">|
+|**IRF3205 Double Motor Driver**||
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Double_Motor_Driver.jpg" width="400">|The driver chosen the replace the inadequate one is a 15 Ampere double motor driver, equipped with MOSFET bridges, wich allowed the motor to use the full power provided by the battery without the danger of overheating the chip.|
