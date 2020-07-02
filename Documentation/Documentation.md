@@ -23,12 +23,12 @@ To build the chassis, the protection plates and the wheels I used some woodworki
 
 |**Main structure**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="800">|Inside the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="1400">|Inside the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.|
 
 
 |**Distance Sensor**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Incapsulated_Sensor.jpg" width="100">|The distance sensor had to be placed on the front, so it was closed in a proper case.|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Incapsulated_Sensor.jpg" width="300">|The distance sensor had to be placed on the front, so it was closed in a proper case.|
 
 
 Then the turret was built creating the servomotor housing inside and creating room for the firing LEDs. Unfortunately, the micro servo doesn't have a robust axle, so the connection is not the best, but for its purpose is enough.
