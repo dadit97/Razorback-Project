@@ -34,6 +34,6 @@ Then the turret was built creating the servomotor housing inside and creating ro
 
 The remaining of the building work were just the various decorations to make it similar to the target.
 
-|**Piceses used and result after spray painting**|
+|**Components used and result after spray painting**|
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="400">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="450">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="450">|
