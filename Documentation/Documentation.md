@@ -24,14 +24,16 @@ Inside the structure two pulleys were placed to reduce the speed of the main mot
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="550">|
 
-The distance sensor had to be placed on the front, so it was colsed in a proper case.
+The distance sensor had to be placed on the front, so it was closed in a proper case.
 
 |**Distance Sensor**|
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Incapsulated_Sensor.jpg" width="550">|
 
-Then the turret was built creating the servomotor housing inside and creating room for the firing LEDs, the remaining of the building work were just the various decorations to make it similar to the target.
+Then the turret was built creating the servomotor housing inside and creating room for the firing LEDs. Unfortunately, the micro servo doesn't have a robust axle, so the connection is not the best, but for its purpose is enough.
+
+The remaining of the building work were just the various decorations to make it similar to the target.
 
 |**Piceses used and result after spray painting**|
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="550">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="550">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="400">|
