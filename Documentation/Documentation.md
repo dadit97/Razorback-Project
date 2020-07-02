@@ -3,6 +3,7 @@
 - [Introduction](#Introduction)
 - [Model construction](#Body)
 - [Sound System](#Sound)
+- [Motors System](#Motors)
 
 ## Introduction <a name="Introduction"></a>
 
@@ -45,7 +46,33 @@ To create the illusion of the engine rumble a MP3 module has been added to the c
 
 |**MP3 module and Speaker**|
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="450">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" width="450">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="450">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" heigth="450">|
 
 The module will be instructed by the Arduino using a Serial communication, which will change the sound to be reproduced to suit the state of the model.
 The storage of the module is a microSD card, in which the looped sounds were loaded.
+
+## Motors System <a name="Motors"></a>
+
+At the beginning of the project, the propulsion was based on two small 3-6V DC motors, but during the construction, the model's weigth showed clearly that this solution was unacceptable.
+
+According to this, the two motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.
+
+|**Motors used**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="550">|
+
+After the replacing arised another problem, the motor driver.
+The driver chosen was the classic L298N, basically the standard for Arduino powered moving projects.
+
+|**L298N**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/L298N.jpg" width="550">|
+
+This double motor driver, unfortunately, can provide just 2 Ampere for channel, which is enough for 3-6V motors, but too low for something bigger.
+According to a multimeter test, the motors can use up to 5.6 Ampere at stall load, so even using one driver per motor by bridging the outputs (a solution that create a lot of redundancy in the circuit), was not enough.
+
+The driver chosen the replace the inadequate one was a 15 Ampere double motor driver, equipped with MOSFET bridges, wich allowed the motor to use the full power provided by the battery without the danger of overheating the chip.
+
+|**IRF3205 Double Motor Driver**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Double_Motor_Driver.jpg" width="550">|
