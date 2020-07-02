@@ -2,6 +2,7 @@
 
 - [Introduction](#Introduction)
 - [Model construction](#Body)
+- [Sound System](#Sound)
 
 ## Introduction <a name="Introduction"></a>
 
@@ -38,7 +39,7 @@ The remaining of the building work were just the various decorations to make it 
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="450">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="450">|
 
-## Sound System
+## Sound System <a name="Sound"></a>
 
 To create the illusion of the engine rumble a MP3 module has been added to the control system, connected to a tiny 3W speaker, which is the maximum power that the module can supply without an amplifier.
 
