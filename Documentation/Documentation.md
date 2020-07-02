@@ -22,8 +22,8 @@ To build the chassis, the protection plates and the wheels I used some woodworki
 
 
 |**Main structure**||
-|:--:|:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="400">|Inside the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.|
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="800">|Inside the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.|
 
 
 |**Distance Sensor**||
