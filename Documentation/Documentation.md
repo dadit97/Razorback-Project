@@ -49,7 +49,7 @@ The remaining of the building work were just the various decorations to make it 
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/DF_Mini.jpg" width="400"> |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Speaker.jpg" width="400" heigth="400">|To create the illusion of the engine rumble, a MP3 module has been added to the control system, connected to a tiny 3W speaker, which is the maximum power that the module can supply without an amplifier.|
 
 
-The module will be instructed by the Arduino using a Serial communication, which will change the sound to be reproduced to suit the state of the model.
+The module will be instructed by the Arduino using Serial communication, which will change the sound to be reproduced to suit the state of the model.
 The storage of the module is a microSD card, in which the looped sounds were loaded.
 
 ## Motors System <a name="Motors"></a>
@@ -59,11 +59,11 @@ At the beginning of the project, the propulsion was based on two small 3-6V DC m
 
 |**Motors used**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="400">|According to this, the two motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="400">|According to this requirement, the little motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.|
 
 
 After the replacing another problem arised, the motor driver.
-The driver chosen was the classic L298N, basically the standard for Arduino-powered moving projects.
+The driver chosen was the classic L298N, basically the standard for  Arduino-powered moving projects.
 
 
 |**L298N**||
