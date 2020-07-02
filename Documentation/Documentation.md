@@ -32,6 +32,6 @@ The distance sensor had to be placed on the front, so it was colsed in a proper 
 
 Then the turret was built creating the servomotor housing inside and creating room for the firing LEDs, the remaining of the building work were just the various decorations to make it similar to the target.
 
-|**Piceses built and result after spray painting**|
+|**Piceses used and result after spray painting**|
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="550">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="550">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="550">|
