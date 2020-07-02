@@ -18,8 +18,20 @@ This is an electronic project, so, the model will be simplified to some extent, 
 
 To build the chassis, the protection plates and the wheels I used some woodworking machines that I have access to. The dimensions have been estabilished by scaling some images knowing the total length and width of the model.
 
-In the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.
+Inside the structure two pulleys were placed to reduce the speed of the main motors, these will transmit the power to the geared wheels,which were taken from an old Meccano kit. A structure to hold the motors in place has been installed in the middle of the body.
 
 |**Main structure**|
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Main_Structure.jpg" width="550">|
+
+The distance sensor had to be placed on the front, so it was colsed in a proper case.
+
+|**Distance Sensor**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Distance_Sensor.jpg" width="550">|
+
+Then the turret was built creating the servomotor housing inside and creating room for the firing LEDs, the remaining of the building work were just the various decorations to make it similar to the target.
+
+|**Piceses built and result after spray painting**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="550">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg">|
