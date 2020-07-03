@@ -68,7 +68,7 @@ The driver chosen was the classic L298N, basically the standard for<br> Arduino-
 
 |**L298N**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/L298N.jpg" width="400">|This double motor driver, unfortunately, can provide just 2 Ampere for channel, which is enough for 3-6V motors, but too low for something bigger.According to a multimeter test, the motors can use up to 5.6 Ampere at stall load, so even using one driver per motor by bridging the outputs (a solution that create a lot of redundancy in the circuit), was not enough.|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/L298N.jpg" width="400">|This double motor driver, unfortunately, can provide just 2 Ampere for channel, which is enough for 3-6V motors, but too low for something bigger.According to a multimeter test, the motors can use up to 5.6 Ampere at stall load, so even using one driver per motor by bridging the outputs (a solution that creates a lot of redundancy in the circuit), was not enough.|
 
 
 |**IRF3205 Double Motor Driver**||
