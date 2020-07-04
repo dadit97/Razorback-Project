@@ -96,7 +96,7 @@ The driver chosen was the classic L298N, basically the standard for<br> Arduino-
 
 |**Arduino Uno R3**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Prototyping_Module.jpg" width="400">|In the initial stages of the project, the idea was to use a normal Arduino Uno supported by a mini breadboard, but, the small amount of space remained for it, suggested that something smaller was necessary. So the microcontroller was fitted with a Prototyping Module, which provides more Ground and Power connections, along with making the unit more compact.
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Prototyping_Module.jpg" width="600">|In the initial stages of the project, the idea was to use a normal Arduino Uno supported by a mini breadboard, but, the small amount of space remained for it, suggested that something smaller was necessary. So the microcontroller was fitted with a Prototyping Module, which provides more Ground and Power connections, along with making the unit more compact.
 
 |**HC-05 Bluetooth Module**||
 |:--:|--|
