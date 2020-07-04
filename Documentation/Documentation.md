@@ -46,7 +46,7 @@ The remaining of the building work were just the various decorations to make it 
 
 |**Battery**||
 |:--:|--|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Battery.jpg" width="400">|The model will be powered up by a rechargable NI-MH 7.2V battery.|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Battery.jpg" width="250">|The model will be powered up by a rechargable NI-MH 7.2V battery.|
 
 
 
@@ -102,5 +102,5 @@ To create the complete circuit some basic electronic components were necessary, 
 
 ||
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="400"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="400"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="400">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="300">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="300"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="300"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="300">|
 
