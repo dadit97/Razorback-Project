@@ -10,4 +10,5 @@ University project consisting of an Arduino controlled tank model
 - Programmable path to follow autonomously
 - Bluetooth controlled
 
-[Link to overview](https://github.com/dadit97/Razorback-Project/blob/master/Documentation/Overview.md)
+[Link to Overview](https://github.com/dadit97/Razorback-Project/blob/master/Documentation/Overview.md)
+[Link to Arduino code](https://github.com/dadit97/Razorback-Project/blob/master/Code/BluetoothController/BluetoothController.ino)
