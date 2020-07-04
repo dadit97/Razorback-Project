@@ -4,6 +4,8 @@
 - [Model construction](#Body)
 - [Sound System](#Sound)
 - [Motors System](#Motors)
+- [Power Source](#Power)
+- [Compass module](#Compass)
 
 ## Introduction <a name="Introduction"></a>
 
@@ -40,6 +42,13 @@ The remaining of the building work were just the various decorations to make it 
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="400">|
 
+## Power Source <a name="Power"></a>
+
+|**Battery**||
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Battery.jpg" width="400">|The model will be powered up by a rechargable NI-MH 7.2V battery.|
+
+
 
 ## Sound System <a name="Sound"></a>
 
@@ -62,7 +71,7 @@ At the beginning of the project, the propulsion was based on two small 3-6V DC m
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/9V_Motor.jpg" width="400">|According to this requirement, the little motors had been replaced by two 9V DC motors, which can provide the torque required to move the tank at a reasonable speed.|
 
 
-After the replacing another problem arised, the motor driver.
+After the replacing another problem arose, the motor driver.
 The driver chosen was the classic L298N, basically the standard for<br> Arduino-powered moving projects.
 
 
@@ -74,3 +83,24 @@ The driver chosen was the classic L298N, basically the standard for<br> Arduino-
 |**IRF3205 Double Motor Driver**||
 |:--:|--|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Double_Motor_Driver.jpg" width="400">|The driver chosen the replace the inadequate one is a 15 Ampere double motor driver, equipped with MOSFET bridges, wich allowed the motor to use the full power provided by the battery without the danger of overheating the chip.|
+
+## Compass module <a name="Compass"></a>
+
+|**GY-271 Electronic Compass**||
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/GY-271.jpg" width="400">|To implement the autonomus movement along a path, the tank has been equipped with an electronic compass. Via I2C communication it will provide the heading information to the Arduino, so the model will be able to control its direction with a good amount of accuracy.
+
+## Microcontroller <a name="Microcontroller"></a>
+
+|**Arduino Uno R3**||
+|:--:|--|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Prototyping_Module" width="400">|In the initial stages of the project, the idea was to use a normal Arduino Uno supported by a mini breadboard, but the small amount of space that remained for it suggested that something smaller was necessary. So the microcontroller was fitted with a Prototyping Module, which provides more Ground and Power connections, along with making the unit more compact.
+
+## Other components <a name="Other"></a>
+
+To create the complete circuit some basic electronic components were necessary, like LEDs, jumper wires, electric cables, resistors and NPN transistors(for the lights circuit).
+
+||
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="400"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="400"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="400">|
+
