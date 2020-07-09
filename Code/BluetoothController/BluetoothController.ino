@@ -1,4 +1,4 @@
-#include <HCSR04.h>
+ #include <HCSR04.h>
 #include <QMC5883LCompass.h>
 #include <L293.h>
 #include <DFPlayerMini_Fast.h>
@@ -20,11 +20,9 @@
 #define echoPin 10
 #define triggerPin 11
 #define servoPin 9
-#define busyPin A2
-#define lightsPin 12
-#define serialBaud 9600
-#define firingPin1 A2
-#define firingPin2 A3
+#define lightsPin 2
+#define serialBaud 115200
+#define firingPin A1
 
 #define DeployVoice 1
 #define IgnitionSound 2
@@ -51,6 +49,7 @@ bool engineOn = false;
 bool ledsOn = false;
 bool moving = false;
 short turretRotation;
+short throttle;
 
 unsigned long timer;
 
@@ -67,7 +66,7 @@ instruction path[50];
 short lastInstructionIndex = 0;
 
 DFPlayerMini_Fast player;
-SoftwareSerial playerSerial(A1,A0);
+SoftwareSerial playerSerial(A3,A2);
 
 // FUNCTIONS
 
@@ -162,7 +161,7 @@ void followPath()
   double distance;
   instruction temp;
   
-  while(path[i].valid == false)
+  while(path[i].valid == true)
   {
     
     temp = path[i];
@@ -215,9 +214,8 @@ void followPath()
       case 'R':
       {
         compass.read();
-        int initialAzimuth = (compass.getAzimuth()+180)%360 ;
-        int targetHeading = initialAzimuth + temp.duration;
-        if (targetHeading >  360) targetHeading -= 360;
+        int initialAzimuth = (compass.getAzimuth())%360 ;
+        int targetHeading = (initialAzimuth + temp.duration)%360;
         
         while(true)
         {
@@ -240,7 +238,7 @@ void followPath()
       case 'L':
       {
         compass.read();
-        int initialAzimuth = (compass.getAzimuth()+180)%360;
+        int initialAzimuth = (compass.getAzimuth())%360;
         int targetHeading = initialAzimuth - temp.duration;
         if (targetHeading <  0) targetHeading += 360;
         
@@ -513,11 +511,9 @@ void fire()
       rigthEngine.back(fullThrottle);
       leftEngine.back(fullThrottle);
       delay(50);
-      digitalWrite(firingPin1,HIGH);
-      digitalWrite(firingPin2,HIGH);
-      delay(500);
-      digitalWrite(firingPin1,LOW);
-      digitalWrite(firingPin2,LOW);
+      digitalWrite(firingPin,HIGH);
+      delay(200);
+      digitalWrite(firingPin,LOW);
       rigthEngine.stop();
       leftEngine.stop();
       return;
@@ -525,11 +521,25 @@ void fire()
   }
   else player.play(movingFiringSound);
   delay(50);
-  digitalWrite(firingPin1,HIGH);
-  digitalWrite(firingPin2,HIGH);
-  delay(500);
-  digitalWrite(firingPin1,LOW);
-  digitalWrite(firingPin2,LOW);
+  digitalWrite(firingPin,HIGH);
+  delay(200);
+  digitalWrite(firingPin,LOW);
+}
+
+void setThrottle()
+{
+  while(true)
+  {
+    if(Serial.available() > 2)
+    {
+      short value = Serial.parseInt();
+      throttle = map(value, 0, 0, 100, 255);
+      flushReceiveBuffer();
+      String setting = "Throttle set to: ";
+      Serial.println(setting + throttle);
+      return;  
+    }  
+  }
 }
 
 void setup()
@@ -546,13 +556,15 @@ void setup()
 
   compass.init();
 
+  throttle = halfThrottle;
+
   pinMode(engineRigthEnable, OUTPUT);
   pinMode(engineRigthDir, OUTPUT);
 
   pinMode(engineLeftEnable, OUTPUT);
   pinMode(engineLeftDir, OUTPUT);
 
-  pinMode(busyPin, INPUT);
+  pinMode(firingPin, OUTPUT);
   pinMode(lightsPin, OUTPUT);
   analogWrite(engineRigthEnable, LOW);
   analogWrite(engineLeftEnable, LOW);
@@ -572,20 +584,25 @@ void loop()
     {
       switchEngine();
     }
-    else if (command == 'P'){
-              processPath();
-            }
-    else if (command == 'L')
-    {
-      switchLeds();
-    }
     else if (command == 'T')
     {
       rotateTurret();
     }
+    else if (command == 'P')
+    {
+      processPath();
+    }
+    else if (command == 'L')
+    {
+      switchLeds();
+    }
     else if (command == 'F')
     {
       fire();
+    }
+    else if (command == 'V')
+    {
+      setThrottle();  
     }
     else
     {
@@ -593,19 +610,19 @@ void loop()
       {
         if (command == '1')
         {
-          moveForward(halfThrottle);
+          moveForward(throttle);
         }
         else if (command == '2')
         {
-          rotateRigth(halfThrottle);
+          rotateRigth(throttle);
         }
         else if (command == '3')
         {
-          moveBackward(halfThrottle);
+          moveBackward(throttle);
         }
         else if (command == '4')
         {
-          rotateLeft(halfThrottle);
+          rotateLeft(throttle);
         }
         else if (command == '0')
         {
@@ -613,21 +630,26 @@ void loop()
         }
         else if (command == '5')
         {
-          moveForwardRigth(halfThrottle);
+          moveForwardRigth(throttle);
         }
         else if (command == '6')
         {
-          moveBackwardRigth(halfThrottle);
+          moveBackwardRigth(throttle);
         }
 
         else if (command == '7')
         {
-          moveBackwardLeft(halfThrottle);
+          moveBackwardLeft(throttle);
         }
 
         else if (command == '8')
         {
-          moveForwardLeft(halfThrottle);
+          moveForwardLeft(throttle);
+        }
+
+        else if(command == 'E')
+        {
+          followPath();
         }
       }
     }
