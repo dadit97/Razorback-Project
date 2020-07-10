@@ -49,7 +49,7 @@ bool engineOn = false;
 bool ledsOn = false;
 bool moving = false;
 short turretRotation;
-short throttle;
+short speedSetting;
 
 unsigned long timer;
 
@@ -180,7 +180,7 @@ void followPath()
             return;  
           }
           distance = distanceSensor.measureDistanceCm();
-          if(distance < 10 || distance <= initialDistance - temp.duration)
+          if(distance < 15 || distance <= initialDistance - temp.duration)
           {
             stopEngines();
             break;
@@ -526,17 +526,17 @@ void fire()
   digitalWrite(firingPin,LOW);
 }
 
-void setThrottle()
+void setSpeedSetting()
 {
   while(true)
   {
     if(Serial.available() > 2)
     {
       short value = Serial.parseInt();
-      throttle = map(value, 0, 0, 100, 255);
+      speedSetting = map(value, 0, 0, 100, 255);
       flushReceiveBuffer();
       String setting = "Throttle set to: ";
-      Serial.println(setting + throttle);
+      Serial.println(setting + speedSetting);
       return;  
     }  
   }
@@ -556,7 +556,7 @@ void setup()
 
   compass.init();
 
-  throttle = halfThrottle;
+  speedSetting = halfThrottle;
 
   pinMode(engineRigthEnable, OUTPUT);
   pinMode(engineRigthDir, OUTPUT);
@@ -602,7 +602,7 @@ void loop()
     }
     else if (command == 'V')
     {
-      setThrottle();  
+      setSpeedSetting();
     }
     else
     {
@@ -610,19 +610,19 @@ void loop()
       {
         if (command == '1')
         {
-          moveForward(throttle);
+          moveForward(speedSetting);
         }
         else if (command == '2')
         {
-          rotateRigth(throttle);
+          rotateRigth(speedSetting);
         }
         else if (command == '3')
         {
-          moveBackward(throttle);
+          moveBackward(speedSetting);
         }
         else if (command == '4')
         {
-          rotateLeft(throttle);
+          rotateLeft(speedSetting);
         }
         else if (command == '0')
         {
@@ -630,21 +630,21 @@ void loop()
         }
         else if (command == '5')
         {
-          moveForwardRigth(throttle);
+          moveForwardRigth(speedSetting);
         }
         else if (command == '6')
         {
-          moveBackwardRigth(throttle);
+          moveBackwardRigth(speedSetting);
         }
 
         else if (command == '7')
         {
-          moveBackwardLeft(throttle);
+          moveBackwardLeft(speedSetting);
         }
 
         else if (command == '8')
         {
-          moveForwardLeft(throttle);
+          moveForwardLeft(speedSetting);
         }
 
         else if(command == 'E')
