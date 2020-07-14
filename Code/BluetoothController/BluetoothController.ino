@@ -275,13 +275,14 @@ void switchEngine()
     /*player.play(DeployVoice);
     delay(2500);*/
     player.play(IgnitionSound);
-    }
+  }
   else
   {
-    if (moving == true){
+    if (moving == true)
+    {
         stopEngines();
         delay(2450);
-      }
+    }
     player.play(ShutOffSound);
     digitalWrite(lightsPin, LOW);
     ledsOn = false;
@@ -289,6 +290,7 @@ void switchEngine()
 
   engineOn = !engineOn;
   Serial.println("Switched Engine");
+  flushReceiveBuffer();
 }
 
 void switchLeds()
@@ -315,7 +317,7 @@ void moveForward(int throttle)
     {
       rigthEngine.forward(i);
       leftEngine.forward(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -336,7 +338,7 @@ void moveForwardRigth(int throttle)
     {
       rigthEngine.forward(i/2);
       leftEngine.forward(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -357,7 +359,7 @@ void moveForwardLeft(int throttle)
     {
       rigthEngine.forward(i);
       leftEngine.forward(i/2);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -378,7 +380,7 @@ void moveBackward(int throttle)
     {
       rigthEngine.back(i);
       leftEngine.back(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -399,7 +401,7 @@ void moveBackwardRigth(int throttle)
     {
       rigthEngine.back(i/2);
       leftEngine.back(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -420,7 +422,7 @@ void moveBackwardLeft(int throttle)
     {
       rigthEngine.back(i);
       leftEngine.back(i/2);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -441,7 +443,7 @@ void rotateRigth(int throttle)
     {
       rigthEngine.back(i);
       leftEngine.forward(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -462,7 +464,7 @@ void rotateLeft(int throttle)
     {
       rigthEngine.forward(i);
       leftEngine.back(i);
-      delay(10);
+      delay(5);
     }
   }
   else
@@ -495,7 +497,7 @@ void rotateTurret()
     }
   }
   turretRotation = 180 - rotation -10;
-  turretServo.write(turretRotation,50);
+  turretServo.write(turretRotation,90);
   //String rotatingString = "Rotating turret to ";
   //n  Serial.println(rotatingString + rotation);
 }
