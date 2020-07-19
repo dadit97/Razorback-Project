@@ -7,3 +7,5 @@ To get information about the status of the model there is a window where all the
 ||
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Control_Interface.png" width="1000">|
+
+Legal note: I am not the author of this application and i don't have any association with its creator.
