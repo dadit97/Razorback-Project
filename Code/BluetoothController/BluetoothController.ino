@@ -1,10 +1,11 @@
 #include <HCSR04.h>
+#include <ArduinoSort.h>
 #include <QMC5883LCompass.h>
 #include <L293.h>
 #include <DFPlayerMini_Fast.h>
 #include <SoftwareSerial.h>
 #include <VarSpeedServo.h>
- 
+
 #define engineRigthEnable 5
 #define engineRigthDir 4
 
@@ -24,15 +25,14 @@
 #define serialBaud 115200
 #define firingPin A1
 
-#define DeployVoice 1
-#define IgnitionSound 2
-#define AccelCruiseSound 3
-#define ReleaseIdleSound 4
-#define CruiseSound 5
-#define ShutOffSound 6
-#define idleFiringSound 7
-#define movingFiringSound 8
-#define stoppedFiringSound 9
+#define IgnitionSound 1
+#define AccelCruiseSound 2
+#define ReleaseIdleSound 3
+#define ShutOffSound 4
+#define idleFiringSound 5
+#define movingFiringSound 6
+#define stoppedFiringSound 7
+#define patrollingSound 8
 
 // DECLARATIONS
 
@@ -63,18 +63,18 @@ UltraSonicDistanceSensor distanceSensor(triggerPin, echoPin);
 VarSpeedServo turretServo;
 
 instruction path[50];
-short lastInstructionIndex = 0;
 
 DFPlayerMini_Fast player;
-SoftwareSerial playerSerial(A3,A2);
+SoftwareSerial playerSerial(A3, A2);
+bool soundsOn = true;
 
 // FUNCTIONS
 
 void flushReceiveBuffer()
 {
   delay(2);
-  while(Serial.available() > 0)
-  Serial.read();  
+  while (Serial.available() > 0)
+    Serial.read();
 }
 
 bool checkInstruction(instruction i)
@@ -89,33 +89,54 @@ bool checkInstruction(instruction i)
   return false;
 }
 
+void erasePath()
+{
+  for (int i = 0; i < 50; i++)
+  {
+    path[i].valid = false;
+    path[i].heading = 0;
+    path[i].duration = 0;
+  }
+  Serial.println("Path erased");
+  flushReceiveBuffer();
+}
+
 void processPath()
 {
+  short lastInstructionIndex = 0;
   while (true)
   {
     instruction temp;
     if (Serial.available() > 0)
     {
       char next = (char)Serial.read();
+
+      if (next == 'E')
+      {
+        erasePath();
+        return;
+      }
+
       if (next != 'p')
       {
         temp.heading = next;
-        while(Serial.available() < 3)
+        timer = millis();
+        while (Serial.available() < 3)
         {
+          if (millis()-timer > 3000)
+          {
+            Serial.println("Path acquisition failed!");
+            return;  
+          }
         }
-        //temp.duration = short(short(Serial.read()) * 100 + short(Serial.read()) * 10 + short(Serial.read()));
         temp.duration = Serial.parseInt();
-        temp.valid = true;
         if (checkInstruction(temp))
         {
+          temp.valid = true;
           if (lastInstructionIndex < 49)
           {
-            lastInstructionIndex++;
             path[lastInstructionIndex] = temp;
-            Serial.print("Direzione acquisita: ");
-            Serial.println(temp.heading);
-            Serial.print("Distanza acquisita: ");
-            Serial.println(temp.duration);
+            lastInstructionIndex++;
             continue;
           }
           else
@@ -128,7 +149,7 @@ void processPath()
         else
         {
           Serial.println("Path not acceptable, acquisition stopped!");
-          lastInstructionIndex = 0;
+          erasePath();
           flushReceiveBuffer();
           return;
         }
@@ -136,6 +157,14 @@ void processPath()
       else
       {
         flushReceiveBuffer();
+        for (int i = 0; i < 50; i++)
+        {
+          if (path[i].valid == true)
+          {
+            Serial.println(path[i].heading);
+            Serial.println(path[i].duration);
+          }
+        }
         return;
       }
     }
@@ -144,126 +173,197 @@ void processPath()
 
 bool checkStopOrder()
 {
-   if(Serial.available())
+  if (Serial.available())
+  {
+    if (char(Serial.read()) == 'S')
     {
-      if(char(Serial.read()) == 'S')
-      {
-        return true;  
-      }
+      return true;
     }
+  }
   return false;
 }
 
 void followPath()
 {
-  short i = 0;
-  short azimuth;
+  player.play(patrollingSound);
+  int i = 0;
+  int azimuth;
   double distance;
+  bool following;
   instruction temp;
-  
-  while(path[i].valid == true)
+  delay(2300);
+
+  while (path[i].valid == true)
   {
-    
+
     temp = path[i];
-    switch(temp.heading)
+    switch (temp.heading)
     {
-      case 'F':
+    case 'F':
+    {
+      double targetDistance = getDistance() - temp.duration;
+      Serial.print("Target distance = ");
+      Serial.println(targetDistance);
+
+      while (true)
       {
-        double initialDistance = distanceSensor.measureDistanceCm();
-        
-        while(true)
+        if (checkStopOrder())
         {
-          if(checkStopOrder())
-          {
-            stopEngines();
-            flushReceiveBuffer();
-            return;  
-          }
-          distance = distanceSensor.measureDistanceCm();
-          if(distance < 15 || distance <= initialDistance - temp.duration)
-          {
-            stopEngines();
-            break;
-          }
-          moveForward(halfThrottle);
+          stopEngines();
+          flushReceiveBuffer();
+          return;
         }
-        break;
-      }
-      case 'B':
-      {
-        double initialDistance = distanceSensor.measureDistanceCm();
-        
-        while(true)
+        distance = getDistance();
+        if (distance < 20 || distance <= targetDistance)
         {
-          if(checkStopOrder())
-          {
-            stopEngines();
-            flushReceiveBuffer();
-            return;  
-          }
-          distance = distanceSensor.measureDistanceCm();
-          if(distance >= 400 || distance >= initialDistance + temp.duration)
-          {
-            stopEngines();
-            break;
-          }
-          moveBackward(halfThrottle);
+          stopEngines();
+          following = false;
+          break;
         }
-        break;
+        if (following == false)
+        {
+          moveForward(100);
+          following = true;
+        }
       }
-      case 'R':
+      break;
+    }
+    case 'B':
+    {
+      double targetDistance = getDistance() + temp.duration;
+      Serial.print("Target distance = ");
+      Serial.println(targetDistance);
+
+      while (true)
       {
+        if (checkStopOrder())
+        {
+          stopEngines();
+          flushReceiveBuffer();
+          return;
+        }
+        distance = getDistance();
+        if (distance >= 400 || distance >= targetDistance)
+        {
+          stopEngines();
+          following = false;
+          break;
+        }
+        if (following == false)
+        {
+          moveBackward(100);
+          following = true;
+        }
+      }
+      break;
+    }
+    case 'R':
+    {
+      compass.read();
+      int initialAzimuth = (compass.getAzimuth());
+      Serial.print("Initial Azimuth = ");
+      Serial.println(initialAzimuth);
+      int targetHeading = (initialAzimuth + temp.duration) % 360;
+      Serial.print("Target heading = ");
+      Serial.println(targetHeading);
+
+      while (true)
+      {
+        if (checkStopOrder())
+        {
+          stopEngines();
+          flushReceiveBuffer();
+          return;
+        }
         compass.read();
-        int initialAzimuth = (compass.getAzimuth())%360 ;
-        int targetHeading = (initialAzimuth + temp.duration)%360;
-        
-        while(true)
+        azimuth = compass.getAzimuth();
+        if (rigthTargetHeadingCheck(azimuth,targetHeading))
         {
-          if(checkStopOrder())
-          {
-            stopEngines();
-            flushReceiveBuffer();
-            return;  
-          }
-          azimuth = compass.getAzimuth();
-          if(azimuth >= targetHeading)
-          {
-            stopEngines();
-            break;
-          }
-          rotateRigth(100);
+          stopEngines();
+          following = false;
+          break;
         }
-        break;
+        if (following == false)
+        {
+          rotateRigth(70);
+          following = true;
+        }
       }
-      case 'L':
+      break;
+    }
+    case 'L':
+    {
+      compass.read();
+      int initialAzimuth = (compass.getAzimuth());
+      Serial.print("Initial Azimuth = ");
+      Serial.println(initialAzimuth);
+      int targetHeading = (initialAzimuth - temp.duration)%360;
+      Serial.print("Target heading = ");
+      Serial.println(targetHeading);
+
+      while (true)
       {
-        compass.read();
-        int initialAzimuth = (compass.getAzimuth())%360;
-        int targetHeading = initialAzimuth - temp.duration;
-        if (targetHeading <  0) targetHeading += 360;
-        
-        while(true)
+        if (checkStopOrder())
         {
-          if(checkStopOrder())
-          {
-            stopEngines();
-            flushReceiveBuffer();
-            return;  
-          }
-          azimuth = compass.getAzimuth();
-          if(azimuth <= targetHeading)
-          {
-            stopEngines();
-            break;
-          }
-          rotateRigth(100);
+          stopEngines();
+          flushReceiveBuffer();
+          return;
         }
-        break;
+        compass.read();
+        azimuth = compass.getAzimuth();
+        if (leftTargetHeadingCheck(azimuth,targetHeading))
+        {
+          stopEngines();
+          following = false;
+          break;
+        }
+        if (following == false)
+        {
+          rotateLeft(70);
+          following = true;
+        }
       }
+      break;
+    }
     }
     i++;
   }
   flushReceiveBuffer();
+}
+
+bool rigthTargetHeadingCheck(int actual, int target)
+{
+  if(target < actual)
+  {
+    return false;
+  }
+  if(actual >= target) return true;
+
+  return false;
+}
+
+bool leftTargetHeadingCheck(int actual, int target)
+{
+  if(target > actual)
+  {
+    return false;
+  }
+  if(actual <= target) return true;
+
+  return false;
+}
+
+int getDistance()
+{
+  int distances[10];
+  for(int i = 0; i < 10; i++)
+  {
+    distances[i] = distanceSensor.measureDistanceCm();
+  }
+  sortArray(distances,10);
+  int distance = distances[4];
+  if(distance < 0) return 400;
+  else return distance;
 }
 
 void switchEngine()
@@ -272,16 +372,14 @@ void switchEngine()
   {
     digitalWrite(lightsPin, HIGH);
     ledsOn = true;
-    /*player.play(DeployVoice);
-    delay(2500);*/
     player.play(IgnitionSound);
   }
   else
   {
     if (moving == true)
     {
-        stopEngines();
-        delay(2450);
+      stopEngines();
+      delay(2450);
     }
     player.play(ShutOffSound);
     digitalWrite(lightsPin, LOW);
@@ -310,14 +408,14 @@ void switchLeds()
 
 void moveForward(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.forward(i);
       leftEngine.forward(i);
-      delay(5);
+      delay(2);
     }
   }
   else
@@ -326,61 +424,58 @@ void moveForward(int throttle)
     leftEngine.forward(throttle);
   }
   moving = true;
-  //Serial.println("moveForward");
 }
 
 void moveForwardRigth(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
-      rigthEngine.forward(i/2);
+      rigthEngine.forward(i / 2);
       leftEngine.forward(i);
-      delay(5);
+      delay(2);
     }
   }
   else
   {
-    rigthEngine.forward(throttle/2);
+    rigthEngine.forward(throttle / 2);
     leftEngine.forward(throttle);
   }
   moving = true;
-  Serial.println("moveForwardRigth");
 }
 
 void moveForwardLeft(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.forward(i);
-      leftEngine.forward(i/2);
-      delay(5);
+      leftEngine.forward(i / 2);
+      delay(2);
     }
   }
   else
   {
     rigthEngine.forward(throttle);
-    leftEngine.forward(throttle/2);
+    leftEngine.forward(throttle / 2);
   }
   moving = true;
-  Serial.println("moveForwardLeft");
 }
 
 void moveBackward(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.back(i);
       leftEngine.back(i);
-      delay(5);
+      delay(2);
     }
   }
   else
@@ -389,91 +484,86 @@ void moveBackward(int throttle)
     leftEngine.back(throttle);
   }
   moving = true;
-  Serial.println("moveBackward");
 }
 
 void moveBackwardRigth(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
-      rigthEngine.back(i/2);
+      rigthEngine.back(i / 2);
       leftEngine.back(i);
-      delay(5);
+      delay(2);
     }
   }
   else
   {
-    rigthEngine.back(throttle/2);
+    rigthEngine.back(throttle / 2);
     leftEngine.back(throttle);
   }
   moving = true;
-  Serial.println("moveBackwardRigth");
 }
 
 void moveBackwardLeft(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.back(i);
-      leftEngine.back(i/2);
-      delay(5);
+      leftEngine.back(i / 2);
+      delay(2);
     }
   }
   else
   {
     rigthEngine.back(throttle);
-    leftEngine.back(throttle/2);
+    leftEngine.back(throttle / 2);
   }
   moving = true;
-  Serial.println("moveBackwardLeft");
 }
 
 void rotateRigth(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
-      rigthEngine.back(i);
+      rigthEngine.stop();
       leftEngine.forward(i);
-      delay(5);
+      delay(2);
     }
   }
   else
   {
-    rigthEngine.back(throttle);
+    rigthEngine.stop();
     leftEngine.forward(throttle);
   }
   moving = true;
-  Serial.println("rotateRigth");
 }
 
 void rotateLeft(int throttle)
 {
-  if(moving == false)
+  if (moving == false)
   {
     player.play(AccelCruiseSound);
-    for(int i = 0;i <= throttle; i++)
+    for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.forward(i);
-      leftEngine.back(i);
-      delay(5);
+      leftEngine.stop();
+      delay(2);
     }
   }
   else
   {
     rigthEngine.forward(throttle);
-    leftEngine.back(throttle);
+    leftEngine.stop();
   }
   moving = true;
-  Serial.println("rotateLeft");
 }
 
 void stopEngines()
@@ -482,13 +572,12 @@ void stopEngines()
   leftEngine.stop();
   moving = false;
   player.play(ReleaseIdleSound);
-  Serial.println("stopEngines");
 }
 
 void rotateTurret()
 {
   short rotation;
-  while(true)
+  while (true)
   {
     if (Serial.available() > 1)
     {
@@ -496,51 +585,73 @@ void rotateTurret()
       break;
     }
   }
-  turretRotation = 180 - rotation -10;
-  turretServo.write(turretRotation,90);
-  //String rotatingString = "Rotating turret to ";
-  //n  Serial.println(rotatingString + rotation);
+  turretRotation = 180 - rotation - 10;
+  turretServo.write(turretRotation, 90);
 }
 
 void fire()
 {
-  if(moving == false)
+  if (moving == false)
   {
-    if(engineOn == false) player.play(stoppedFiringSound);
-    else player.play(idleFiringSound);
-    if(turretRotation >= 40 && turretRotation <= 120)
+    if (engineOn == false)
+      player.play(stoppedFiringSound);
+    else
+      player.play(idleFiringSound);
+    if (turretRotation >= 30 && turretRotation <= 130)
     {
-      rigthEngine.back(fullThrottle);
-      leftEngine.back(fullThrottle);
-      delay(50);
-      digitalWrite(firingPin,HIGH);
-      delay(200);
-      digitalWrite(firingPin,LOW);
+      rigthEngine.back(180);
+      leftEngine.back(180);
+      digitalWrite(firingPin, HIGH);
+      delay(180);
+      digitalWrite(firingPin, LOW);
       rigthEngine.stop();
       leftEngine.stop();
       return;
     }
   }
-  else player.play(movingFiringSound);
+  else
+    player.play(movingFiringSound);
   delay(50);
-  digitalWrite(firingPin,HIGH);
+  digitalWrite(firingPin, HIGH);
   delay(200);
-  digitalWrite(firingPin,LOW);
+  digitalWrite(firingPin, LOW);
 }
 
 void setSpeedSetting()
 {
-  while(true)
+  timer = millis();
+  while (true)
   {
-    if(Serial.available() > 2)
+    if (millis()-timer > 3000)
     {
-      short value = Serial.parseInt();
-      speedSetting = map(value, 0, 0, 100, 255);
-      flushReceiveBuffer();
-      String setting = "Throttle set to: ";
-      Serial.println(setting + speedSetting);
+      Serial.println("Speed setting failed!");
       return;  
-    }  
+    }
+    if (Serial.available() > 1)
+    {
+      int value = Serial.parseInt();
+      speedSetting = map(value, 0, 100, 0, 255);
+      flushReceiveBuffer();
+      Serial.print("Throttle set to: ");
+      Serial.println(speedSetting);
+      return;
+    }
+  }
+}
+
+void switchSounds()
+{
+  if(soundsOn == true)
+  {
+    player.volume(0);
+    soundsOn = false;
+    Serial.println("Sounds off");  
+  }
+  else
+  {
+    player.volume(30);
+    soundsOn = true;
+    Serial.println("Sounds on"); 
   }
 }
 
@@ -548,7 +659,8 @@ void setup()
 {
 
   Serial.begin(serialBaud);
-  
+
+  soundsOn = true;
   playerSerial.begin(9600);
   player.begin(playerSerial);
   player.volume(30);
@@ -557,6 +669,7 @@ void setup()
   turretServo.attach(servoPin);
 
   compass.init();
+  compass.setCalibration(0, 1990, 0, 2307, -2658, 0);
 
   speedSetting = halfThrottle;
 
@@ -571,7 +684,7 @@ void setup()
   analogWrite(engineRigthEnable, LOW);
   analogWrite(engineLeftEnable, LOW);
 
-  turretServo.write(80,50);
+  turretServo.write(80, 50);
   turretRotation = 80;
 }
 
@@ -582,78 +695,118 @@ void loop()
 
     char command = (char)Serial.read();
 
-    if (command == 'I')
+    switch (command)
     {
-      switchEngine();
-    }
-    else if (command == 'T')
-    {
-      rotateTurret();
-    }
-    else if (command == 'P')
-    {
-      processPath();
-    }
-    else if (command == 'L')
-    {
-      switchLeds();
-    }
-    else if (command == 'F')
-    {
-      fire();
-    }
-    else if (command == 'V')
-    {
-      setSpeedSetting();
-    }
-    else
+    case 'I':
+      {
+        switchEngine();
+        break;
+      }
+
+    case 'T':
+      {
+        rotateTurret();
+        break;
+      }
+
+    case 'P':
+      {
+        processPath();
+        break; 
+      }
+
+    case 'L':
+      {
+        switchLeds();
+        break;
+      }
+
+    case 'F':
+      {
+        fire();
+        break;
+      }
+
+    case 'V':
+      {
+        setSpeedSetting();
+        break;
+      }
+
+    case 'M':
+      {
+        switchSounds();
+        break;
+      }
+
+    default:
     {
       if (engineOn == true)
       {
-        if (command == '1')
+        switch (command)
         {
-          moveForward(speedSetting);
-        }
-        else if (command == '2')
-        {
-          rotateRigth(speedSetting);
-        }
-        else if (command == '3')
-        {
-          moveBackward(speedSetting);
-        }
-        else if (command == '4')
-        {
-          rotateLeft(speedSetting);
-        }
-        else if (command == '0')
-        {
-          stopEngines();
-        }
-        else if (command == '5')
-        {
-          moveForwardRigth(speedSetting);
-        }
-        else if (command == '6')
-        {
-          moveBackwardRigth(speedSetting);
-        }
+        case '1':
+          {
+            moveForward(speedSetting);
+            break;
+          }
+        case '2':
+          {
+            rotateRigth(speedSetting);
+            break;
+          }
+        case '3':
+          {
+            moveBackward(speedSetting);
+            break;
+          }
+        case '4':
+          {
+            rotateLeft(speedSetting);
+            break;
+          }
+        case '0':
+          {
+            stopEngines();
+            break;
+          }
+        case '5':
+          {
+            moveForwardRigth(speedSetting);
+            break;
+          }
+        case '6':
+          {
+            moveBackwardRigth(speedSetting);
+            break;
+          }
 
-        else if (command == '7')
-        {
-          moveBackwardLeft(speedSetting);
-        }
+        case '7':
+          {
+            moveBackwardLeft(speedSetting);
+            break;
+          }
 
-        else if (command == '8')
-        {
-          moveForwardLeft(speedSetting);
-        }
+        case '8':
+          {
+            moveForwardLeft(speedSetting);
+            break;
+          }
 
-        else if(command == 'E')
-        {
-          followPath();
+        case 'E':
+          {
+            followPath();
+            break;
+          }
+
+          default:
+          {
+          }
+          
+          }
         }
       }
+      break;
     }
   }
 }
