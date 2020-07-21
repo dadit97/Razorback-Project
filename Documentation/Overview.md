@@ -44,6 +44,10 @@ The remaining of the building work were just the various decorations to make it 
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Pieces.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Result.jpg" width="400">|
 
+|**Final aspect with lights on**|
+|:--:|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Final_Front.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Final_Back.jpg" width="400">|
+
 ## Power Source <a name="Power"></a>
 
 |**Battery**||
@@ -110,11 +114,7 @@ To create the complete circuit some basic electronic components were necessary, 
 |:--:|
 |<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/LEDs.jpg" width="200"><img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="200">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="200">|
 
-|**Final aspect with lights on**|
-|:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Final_Front.jpg" width="400">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Final_Back.jpg" width="400">|
-
-
 
 [Link to Arduino code](https://github.com/dadit97/Razorback-Project/blob/master/Code/BluetoothController/BluetoothController.ino)
+[Link to Circuit Schema](https://github.com/dadit97/Razorback-Project/blob/master/Circuit%20Schema/Schema.md)
 
