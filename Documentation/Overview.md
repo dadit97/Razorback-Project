@@ -108,11 +108,11 @@ The driver chosen was the classic L298N, basically the standard for<br> Arduino-
 
 ## Other components <a name="Other"></a>
 
-To create the complete circuit some basic electronic components were necessary, like LEDs, jumper wires, electric cables, resistors and NPN transistors(for the lights circuit).
+To create the complete circuit some basic electronic components were necessary, like LEDs, jumper wires, electric cables, resistors, NPN transistors(for the lights circuit), and a 5V voltage regulator for the turret Servo.
 
 ||
 |:--:|
-|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/LEDs.jpg" width="200"><img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="200">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="200">|
+|<img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/LEDs.jpg" width="200"><img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Resistors.jpg" width="200">  <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/2222A_Transistor.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Cables.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/Jumpers.jpg" width="200"> <img src="https://github.com/dadit97/Razorback-Project/blob/master/Images/L7805.jpg" width="200">|
 
 
 [Link to Arduino code](https://github.com/dadit97/Razorback-Project/blob/master/Code/BluetoothController/BluetoothController.ino)
