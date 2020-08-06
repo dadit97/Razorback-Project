@@ -533,7 +533,7 @@ void rotateRigth(int throttle)
     player.play(AccelCruiseSound);
     for (int i = 0; i <= throttle; i++)
     {
-      rigthEngine.stop();
+      rigthEngine.back(i);
       leftEngine.forward(i);
       delay(2);
     }
@@ -554,7 +554,7 @@ void rotateLeft(int throttle)
     for (int i = 0; i <= throttle; i++)
     {
       rigthEngine.forward(i);
-      leftEngine.stop();
+      leftEngine.back(i);
       delay(2);
     }
   }
